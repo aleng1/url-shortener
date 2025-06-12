@@ -85,4 +85,78 @@ exports.redirectToOriginalUrl = (req, res) => {
             return res.redirect(data.original_url);
         });
     });
+};
+
+exports.update = (req, res) => {
+    if (!req.body.url) {
+        return res.status(400).send({
+            message: "URL can not be empty!"
+        });
+    }
+
+    if (!validUrl.isUri(req.body.url)) {
+        return res.status(400).send({
+            message: "Invalid URL"
+        });
+    }
+
+    Url.updateByShortCode(
+        req.params.shortCode,
+        new Url({ original_url: req.body.url }),
+        (err, data) => {
+            if (err) {
+                if (err.kind === "not_found") {
+                    res.status(404).send({
+                        message: `Not found Url with shortCode ${req.params.shortCode}.`
+                    });
+                } else {
+                    res.status(500).send({
+                        message: "Error updating Url with shortCode " + req.params.shortCode
+                    });
+                }
+            } else res.send(data);
+        }
+    );
+};
+
+exports.delete = (req, res) => {
+    Url.remove(req.params.shortCode, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    message: `Not found Url with shortCode ${req.params.shortCode}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: "Could not delete Url with shortCode " + req.params.shortCode
+                });
+            }
+        } else res.status(204).send();
+    });
+};
+
+exports.getStats = (req, res) => {
+    Url.findByShortCode(req.params.shortCode, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    message: `Not found Url with shortCode ${req.params.shortCode}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: "Error retrieving Url with shortCode " + req.params.shortCode
+                });
+            }
+        } else {
+            const response = {
+                id: data.id,
+                url: data.original_url,
+                shortCode: data.short_code,
+                createdAt: data.created_at,
+                updatedAt: data.updated_at,
+                accessCount: data.access_count
+            };
+            res.send(response);
+        }
+    });
 }; 

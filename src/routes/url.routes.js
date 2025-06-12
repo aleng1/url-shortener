@@ -6,5 +6,11 @@ module.exports = app => {
     // Create a new Short URL
     router.post("/", urls.create);
   
+    // Retrieve a single Short URL with shortCode
+    router.get("/:shortCode", urls.findOne);
+  
     app.use('/shorten', router);
+
+    // Redirect route
+    app.get('/:shortCode', urls.redirectToOriginalUrl);
 }; 

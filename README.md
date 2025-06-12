@@ -1,5 +1,7 @@
 # URL Shortening Service
 
+> This project is an implementation of the [URL Shortening Service project](https://roadmap.sh/projects/url-shortening-service) from the [Backend Developer Roadmap](https://roadmap.sh/backend). It serves as a practical exercise for backend development skills.
+
 This is a RESTful API for a URL shortening service built with Node.js, Express, and MySQL. It allows users to shorten long URLs and provides endpoints for managing these short URLs.
 
 ## Features

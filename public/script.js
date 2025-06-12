@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('url-input').focus();
+});
+
 document.getElementById('shorten-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const url = document.getElementById('url-input').value;
@@ -27,6 +31,7 @@ document.getElementById('shorten-form').addEventListener('submit', async (e) => 
                     <button class="copy-btn" onclick="copyToClipboard('${shortUrl}')">Copy</button>
                 </div>
             `;
+            document.getElementById('url-input').value = ''; // Clear input field
         } else {
             const error = await response.json();
             resultDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;

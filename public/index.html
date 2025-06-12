@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Shortener</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>URL Shortener</h1>
-    <form id="shorten-form">
-        <input type="text" id="url-input" placeholder="Enter a long URL" required>
-        <button type="submit">Shorten</button>
-    </form>
-    <div id="result"></div>
-
+    <div class="container">
+        <h1>URL Shortener</h1>
+        <p>Enter a long URL to generate a short link.</p>
+        <form id="shorten-form">
+            <div class="form-group">
+                <input type="text" id="url-input" placeholder="https://example.com/very/long/url" required>
+                <button type="submit">Shorten</button>
+            </div>
+        </form>
+        <div id="loader" class="loader" style="display: none;"></div>
+        <div id="result"></div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html> 
